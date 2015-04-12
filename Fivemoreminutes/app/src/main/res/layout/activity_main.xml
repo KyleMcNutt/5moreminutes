@@ -4,12 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#ff2196f3"
+    android:background="@color/tab_background"
     android:icon ="@android:drawable/ic_input_add">
 
 
     <com.astuetz.PagerSlidingTabStrip
         android:id="@+id/tabs"
+        app:pstsIndicatorColor="@color/tab_indicator"
+        app:pstsIndicatorHeight="5dp"
         app:pstsShouldExpand="true"
         app:pstsTextAllCaps="true"
         android:layout_width="match_parent"

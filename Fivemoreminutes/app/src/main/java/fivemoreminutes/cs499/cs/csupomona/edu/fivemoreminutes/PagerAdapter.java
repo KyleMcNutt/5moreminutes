@@ -9,7 +9,7 @@ import android.support.v4.app.FragmentPagerAdapter;
  */
 public class PagerAdapter extends FragmentPagerAdapter {
     final int PAGE_COUNT = 2;
-    private String tabTitles[] = new String[] { "Groups", "QuickAlarms"};
+    private String tabTitles[] = new String[] { "Groups", "Quick Alarms"};
 
     public PagerAdapter(FragmentManager fm) {
         super(fm);

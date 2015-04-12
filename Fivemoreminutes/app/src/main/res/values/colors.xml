@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="half_black">#808080</color>
+    <color name="white">#fafafa</color>
+    <color name="white_pressed">#f1f1f1</color>
+    <color name="tab_background">#2196F3</color>
+    <color name="tab_background_pressed">#ff4181f3</color>
+    <color name="tab_indicator">#17F5F5</color>
+</resources>
