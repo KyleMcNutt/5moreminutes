@@ -1,5 +1,6 @@
 package fivemoreminutes.cs499.cs.csupomona.edu.fivemoreminutes;
 
+import android.app.Activity;
 import android.app.ListFragment;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -16,6 +17,11 @@ import java.util.ArrayList;
 // In this case, the fragment displays simple text based on the page
 public class Group extends Fragment {
 
+    private ArrayList<GroupItem> groupItems = new ArrayList<>();
+
+
+    private GroupItemAdapter listAdapter;
+
 
     public static Group newInstance(int page) {
         Bundle args = new Bundle();
@@ -24,21 +30,25 @@ public class Group extends Fragment {
         return fragment;
     }
 
+    private void addGroupItems(){
+        groupItems.add(new GroupItem("Group"));
+        groupItems.add(new GroupItem("Group1"));
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        addGroupItems();
+        // code which causes the crash is bellow
+        getActivity().setContentView(R.layout.group_fragment);
+        listAdapter = new GroupItemAdapter(getActivity(), groupItems);
+        ListView listView = (ListView) getActivity().findViewById(R.id.lv_group);
+        listView.setAdapter(listAdapter);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-//        SwitchItem[] temp = new SwitchItem[2];
-//        temp[0] = new SwitchItem("group");
-//        System.out.println("SwitchItem1 Added");
-//        temp[1] = new SwitchItem("group1");
-//        System.out.println("SwitchItem2 Added");
-//        ArrayAdapterItem adapter = new ArrayAdapterItem(this.getActivity().getApplicationContext(), R.layout.group_fragment,temp);
-        ListView lv = (ListView)getActivity().findViewById(R.id.lv_group);
-//        lv.setAdapter(adapter);
-        return lv;
+        View view = inflater.inflate(R.layout.group_fragment, container, false);
+        return view;
     }
 }

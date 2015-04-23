@@ -1,0 +1,44 @@
+[33mcommit 11c05cea530ce22b8ef62e42be3c41b8baf3c56e[m
+Author: Calvin <monkiebboi@gmail.com>
+Date:   Wed Apr 15 00:06:08 2015 -0700
+
+    First Attempt adding switches to listview
+
+[33mcommit 9631db78252196e4a5b65bb7d3530c66039f9cda[m
+Author: Kyle McNutt <mcnuttkyle93@gmail.com>
+Date:   Sun Apr 12 13:29:05 2015 -0700
+
+    Tab bar modifications and FAB addition
+
+[33mcommit 7fe140b2a8896ac170c74c0f008c5d488462bee4[m
+Author: Calvin <monkiebboi@gmail.com>
+Date:   Sun Apr 12 02:57:16 2015 -0700
+
+    First GUI attempt
+
+[33mcommit 5dbfaca228b860ed885d0c447165a1c89f4cd9e1[m
+Merge: 88f593f 7933313
+Author: KyleMcNutt <mcnuttkyle93@gmail.com>
+Date:   Wed Apr 1 07:53:53 2015 -0700
+
+    Merge pull request #1 from KyleMcNutt/master
+    
+    Initial Import of Hello World application
+
+[33mcommit 7933313af7d288f31b9b01e4815e5e5a9ad1cd93[m
+Author: Kyle McNutt <Kyle.McNutt@disney.com>
+Date:   Wed Apr 1 07:52:54 2015 -0700
+
+    Forgot to change README file
+
+[33mcommit fab4f93e9a22ac570f2b879fd7197008140fd78f[m
+Author: Kyle McNutt <Kyle.McNutt@disney.com>
+Date:   Wed Apr 1 07:51:44 2015 -0700
+
+    Init commit of Hello World app
+
+[33mcommit 88f593f37f115a201dc8e69b6811a6293707c373[m
+Author: KyleMcNutt <mcnuttkyle93@gmail.com>
+Date:   Wed Apr 1 07:05:14 2015 -0700
+
+    Initial commit
