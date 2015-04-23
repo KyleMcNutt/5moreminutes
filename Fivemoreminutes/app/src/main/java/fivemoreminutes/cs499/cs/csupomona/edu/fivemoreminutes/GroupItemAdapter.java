@@ -18,7 +18,6 @@ import java.util.ArrayList;
 public class GroupItemAdapter extends ArrayAdapter<GroupItem>{
 
     private Context context;
-
     private ArrayList<GroupItem> groupItems;
 
     public GroupItemAdapter(Context context, ArrayList<GroupItem> groupItems) {
@@ -32,6 +31,8 @@ public class GroupItemAdapter extends ArrayAdapter<GroupItem>{
 
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.group_item, parent, false);
+
+
 
         TextView nameText = (TextView) view.findViewById(R.id.name);
         nameText.setText(groupItems.get(position).getName());
