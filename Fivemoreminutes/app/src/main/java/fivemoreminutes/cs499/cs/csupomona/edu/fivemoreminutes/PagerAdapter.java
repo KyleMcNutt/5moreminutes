@@ -1,7 +1,5 @@
 package fivemoreminutes.cs499.cs.csupomona.edu.fivemoreminutes;
 
-import android.app.Activity;
-import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -28,7 +26,7 @@ public class PagerAdapter extends FragmentPagerAdapter {
             case 0:
                 return new Group();
             case 1:
-                return new QuickAlarms();
+                return new Alarm();
         }
         return null;
     }

@@ -1,34 +1,23 @@
-<?xml version="1.0" encoding="utf-8"?><!-- This is the fragment  to be displayed for a section associated with a tab -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:weightSum="1">
+    android:layout_weight="10">
 
-    <Switch
-        android:id="@+id/alarm_switch"
+    <com.getbase.floatingactionbutton.AddFloatingActionButton
+        android:id="@+id/alarm_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="75dp"
+        fab:fab_colorNormal="@color/tab_background"
+        fab:fab_colorPressed="@color/tab_background_pressed"
+        fab:fab_plusIconColor="@color/white" />
+
+    <ListView
+        android:id="@+id/lv_alarm"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_gravity="center"
-        android:layout_margin="20dp"
-        android:layout_weight="0.20"
-        android:checked="false"
-        android:text="@string/alarm" />
-
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:fab="http://schemas.android.com/apk/res-auto"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <com.getbase.floatingactionbutton.AddFloatingActionButton
-            android:id="@+id/normal_plus"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="75dp"
-            fab:fab_colorNormal="@color/tab_background"
-            fab:fab_colorPressed="@color/tab_background_pressed"
-            fab:fab_plusIconColor="@color/white" />
-    </RelativeLayout>
-</LinearLayout>
+        android:layout_height="wrap_content"></ListView>
+</RelativeLayout>
