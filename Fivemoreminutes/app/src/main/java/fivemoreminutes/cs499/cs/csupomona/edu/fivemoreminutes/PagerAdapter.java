@@ -26,7 +26,7 @@ public class PagerAdapter extends FragmentPagerAdapter {
             case 0:
                 return new Group();
             case 1:
-                return new QuickAlarms();
+                return new Alarm();
         }
         return null;
     }
