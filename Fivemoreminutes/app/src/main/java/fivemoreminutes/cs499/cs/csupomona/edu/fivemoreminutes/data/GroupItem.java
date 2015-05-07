@@ -1,4 +1,4 @@
-package fivemoreminutes.cs499.cs.csupomona.edu.fivemoreminutes;
+package fivemoreminutes.cs499.cs.csupomona.edu.fivemoreminutes.data;
 
 /**
  * Created by Calvin on 4/19/2015.
