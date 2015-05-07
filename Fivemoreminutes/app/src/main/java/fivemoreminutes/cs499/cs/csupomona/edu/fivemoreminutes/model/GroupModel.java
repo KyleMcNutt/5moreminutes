@@ -1,4 +1,4 @@
-package fivemoreminutes.cs499.cs.csupomona.edu.fivemoreminutes;
+package fivemoreminutes.cs499.cs.csupomona.edu.fivemoreminutes.model;
 
 import java.util.UUID;
 

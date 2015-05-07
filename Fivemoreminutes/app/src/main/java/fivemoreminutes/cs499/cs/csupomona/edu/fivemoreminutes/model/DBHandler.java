@@ -1,13 +1,11 @@
-package fivemoreminutes.cs499.cs.csupomona.edu.fivemoreminutes;
+package fivemoreminutes.cs499.cs.csupomona.edu.fivemoreminutes.model;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteDatabaseLockedException;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
