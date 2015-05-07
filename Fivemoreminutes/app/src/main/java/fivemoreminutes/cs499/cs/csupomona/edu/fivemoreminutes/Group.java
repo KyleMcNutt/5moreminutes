@@ -1,11 +1,14 @@
 package fivemoreminutes.cs499.cs.csupomona.edu.fivemoreminutes;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ListView;
 
 
@@ -19,6 +22,7 @@ import java.util.ArrayList;
 // In this case, the fragment displays simple text based on the page
 public class Group extends Fragment {
 
+    private DBHandler dbHandler = new DBHandler(getActivity(), null, null, 1);
     private ArrayList<GroupItem> groupItems = new ArrayList<>();
     private GroupItemAdapter listAdapter;
     private int count = 1;
@@ -33,7 +37,6 @@ public class Group extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
@@ -44,15 +47,42 @@ public class Group extends Fragment {
         fab.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                groupItems.add(new GroupItem("Group " + count));
-                count++;
-                listAdapter.notifyDataSetChanged();
+                AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
+
+                alert.setTitle("New Alarm Group");
+                alert.setMessage("Enter the Alarm Group's Name");
+
+                // Set an EditText view to get user input
+                final EditText input = new EditText(getActivity());
+                alert.setView(input);
+
+                alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        String value = input.getText().toString();
+                        groupItems.add(new GroupItem(value));
+                        count++;
+                        listAdapter.notifyDataSetChanged();
+                        Object[] params = { getActivity(), groupItems, listAdapter, value };
+                        new AddGroupTask().execute(params);
+                    }
+                });
+
+                alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        // Canceled.
+                    }
+                });
+
+                alert.show();
             }
         });
 
         ListView listView = (ListView) view.findViewById(R.id.lv_group);
         listAdapter = new GroupItemAdapter(this.getActivity(), groupItems);
         listView.setAdapter(listAdapter);
+
+        Object[] params = { getActivity(), groupItems, listAdapter };
+        new GetGroupsTask().execute(params);
 
         return view;
     }
