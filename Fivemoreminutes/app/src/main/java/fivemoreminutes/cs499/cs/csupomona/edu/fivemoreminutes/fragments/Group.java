@@ -1,4 +1,4 @@
-package fivemoreminutes.cs499.cs.csupomona.edu.fivemoreminutes;
+package fivemoreminutes.cs499.cs.csupomona.edu.fivemoreminutes.fragments;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -16,6 +16,13 @@ import com.getbase.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
+import fivemoreminutes.cs499.cs.csupomona.edu.fivemoreminutes.R;
+import fivemoreminutes.cs499.cs.csupomona.edu.fivemoreminutes.adapters.GroupItemAdapter;
+import fivemoreminutes.cs499.cs.csupomona.edu.fivemoreminutes.data.GroupItem;
+import fivemoreminutes.cs499.cs.csupomona.edu.fivemoreminutes.model.AddGroupTask;
+import fivemoreminutes.cs499.cs.csupomona.edu.fivemoreminutes.model.DBHandler;
+import fivemoreminutes.cs499.cs.csupomona.edu.fivemoreminutes.model.GetGroupsTask;
+
 /**
  * Created by Calvin on 4/11/2015.
  */
@@ -23,7 +30,7 @@ import java.util.ArrayList;
 public class Group extends Fragment {
 
     private DBHandler dbHandler = new DBHandler(getActivity(), null, null, 1);
-    private ArrayList<GroupItem> groupItems = new ArrayList<>();
+    private ArrayList<GroupItem> groupItems = new ArrayList<GroupItem>();
     private GroupItemAdapter listAdapter;
     private int count = 1;
 

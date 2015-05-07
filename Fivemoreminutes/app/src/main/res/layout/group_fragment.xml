@@ -5,6 +5,18 @@
     android:layout_height="match_parent"
     android:layout_weight="10">
 
+    <EditText
+        android:hint="Enter Group Name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/group_name"
+        android:layout_gravity="center_horizontal"
+        android:inputType="text"
+        android:imeOptions="actionDone"
+        android:textColorHighlight="@color/tab_background"
+        android:visibility="gone"
+        />
+
     <com.getbase.floatingactionbutton.AddFloatingActionButton
         android:id="@+id/group_fab"
         android:layout_width="wrap_content"
@@ -19,5 +31,6 @@
     <ListView
         android:id="@+id/lv_group"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"></ListView>
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/group_name"></ListView>
 </RelativeLayout>

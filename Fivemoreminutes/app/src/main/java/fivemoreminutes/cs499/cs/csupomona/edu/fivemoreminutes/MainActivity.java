@@ -4,8 +4,10 @@ import android.graphics.Color;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.widget.ImageView;
+
 import com.astuetz.PagerSlidingTabStrip;
+
+import fivemoreminutes.cs499.cs.csupomona.edu.fivemoreminutes.adapters.PagerAdapter;
 
 
 public class MainActivity extends ActionBarActivity {

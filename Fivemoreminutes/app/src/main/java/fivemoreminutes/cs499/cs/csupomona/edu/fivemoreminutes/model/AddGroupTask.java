@@ -1,9 +1,12 @@
-package fivemoreminutes.cs499.cs.csupomona.edu.fivemoreminutes;
+package fivemoreminutes.cs499.cs.csupomona.edu.fivemoreminutes.model;
 
 import android.app.Activity;
 import android.os.AsyncTask;
 
 import java.util.ArrayList;
+
+import fivemoreminutes.cs499.cs.csupomona.edu.fivemoreminutes.adapters.GroupItemAdapter;
+import fivemoreminutes.cs499.cs.csupomona.edu.fivemoreminutes.data.GroupItem;
 
 /**
  * Created by Kyle-PC on 5/3/2015.
