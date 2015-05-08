@@ -1,10 +1,7 @@
 package fivemoreminutes.cs499.cs.csupomona.edu.fivemoreminutes.fragments;
 
-import android.app.AlertDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -71,7 +68,6 @@ public class Alarm extends Fragment {
         ListView listView = (ListView) view.findViewById(R.id.lv_alarm);
         listAdapter = new AlarmItemAdapter(this.getActivity(), alarmItems);
         listView.setAdapter(listAdapter);
-
 
         return view;
     }

@@ -27,10 +27,6 @@ public class TimePickDialog extends DialogFragment implements TimePickerDialog.O
         TimePickerDialog tpd = new TimePickerDialog(getActivity(), this, hour, minute,
                 DateFormat.is24HourFormat(getActivity()));
 
-        Button button = tpd.getButton(AlertDialog.BUTTON_NEUTRAL);
-
-        //tpd.onClick(this,AlertDialog.BUTTON_NEUTRAL);
-
 
 // Create a new instance of TimePickerDialog and return it
         return tpd;
@@ -40,8 +36,13 @@ public class TimePickDialog extends DialogFragment implements TimePickerDialog.O
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
         // Do something with the time chosen by the user
         if (view.isShown()) {
-            Alarm alarmFrag = (Alarm) getActivity().getSupportFragmentManager().findFragmentByTag("android:switcher:2131361862:1");
-            alarmFrag.addToList(hourOfDay, minute);
+           if(getActivity().getSupportFragmentManager().findFragmentByTag("android:switcher:2131361862:1") == null){
+               Alarm alarmFrag = (Alarm) getActivity().getSupportFragmentManager().findFragmentByTag("android:switcher:2131361862:0");
+               alarmFrag.addToList(hourOfDay, minute);
+           }else {
+               Alarm alarmFrag = (Alarm) getActivity().getSupportFragmentManager().findFragmentByTag("android:switcher:2131361862:1");
+               alarmFrag.addToList(hourOfDay, minute);
+           }
         }
     }
 }

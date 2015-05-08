@@ -1,18 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:weightSum="1">
+
+    <CheckBox
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/repeat_cb"
+        android:text="Repeat"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id ="@+id/DayOfWeek"
+        android:layout_below="@+id/repeat_cb">
 
     <ToggleButton
-        android:layout_width="wrap_content"
-        android:layout_height="48dp"
-        android:layout_gravity="center"
-        android:padding="0dp"
-        android:textColor="#000"
-        android:clickable="false"
-        android:singleLine="true"/>
+        android:layout_width="52dp"
+        android:layout_height="wrap_content"
+        android:text="Sun"
+        android:id="@+id/toggleButton"
+        android:layout_gravity="center_vertical" />
+
+    <ToggleButton
+        android:layout_width="52dp"
+        android:layout_height="wrap_content"
+        android:text="Mon"
+        android:id="@+id/toggleButton1"
+        android:layout_gravity="center_vertical" />
+
+    <ToggleButton
+        android:layout_width="52dp"
+        android:layout_height="wrap_content"
+        android:text="Tue"
+        android:id="@+id/toggleButton2"
+        android:layout_gravity="center_vertical" />
+
+    <ToggleButton
+        android:layout_width="52dp"
+        android:layout_height="wrap_content"
+        android:text="Wed"
+        android:id="@+id/toggleButton3"
+        android:layout_gravity="center_vertical" />
+
+    <ToggleButton
+        android:layout_width="52dp"
+        android:layout_height="wrap_content"
+        android:text="Thu"
+        android:id="@+id/toggleButton4"
+        android:layout_gravity="center_vertical"/>
+
+    <ToggleButton
+        android:layout_width="52dp"
+        android:layout_height="wrap_content"
+        android:text="Fri"
+        android:id="@+id/toggleButton5"
+        android:layout_gravity="center_vertical" />
+
+    <ToggleButton
+        android:layout_width="52dp"
+        android:layout_height="wrap_content"
+        android:text="Sat"
+        android:id="@+id/toggleButton6"
+        android:layout_gravity="center_vertical" />
+    </LinearLayout>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/ringtone_field"
+        android:text="Ringtone"
+        android:layout_below="@+id/DayOfWeek"/>
+    <CheckBox
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/increasing_volume_cb"
+        android:layout_below="@+id/ringtone_field"
+        android:text="Increasing Volume"/>
+    <CheckBox
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/vibrate_cb"
+        android:layout_below="@+id/increasing_volume_cb"
+        android:text="Vibrate"/>
 
 
-
-</LinearLayout>
+</RelativeLayout>

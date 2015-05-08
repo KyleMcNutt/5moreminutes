@@ -3,6 +3,7 @@ package fivemoreminutes.cs499.cs.csupomona.edu.fivemoreminutes.adapters;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.util.Log;
 
 import fivemoreminutes.cs499.cs.csupomona.edu.fivemoreminutes.fragments.Alarm;
 
