@@ -2,12 +2,14 @@ package fivemoreminutes.cs499.cs.csupomona.edu.fivemoreminutes.activities;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 
 import com.astuetz.PagerSlidingTabStrip;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import fivemoreminutes.cs499.cs.csupomona.edu.fivemoreminutes.R;
 import fivemoreminutes.cs499.cs.csupomona.edu.fivemoreminutes.adapters.AlarmItemAdapter;
@@ -34,6 +36,7 @@ public class DrillDownAlarmActivity extends ActionBarActivity {
         tabsStrip.setTextColor(Color.parseColor("#FFFFFF"));
         // Attach the view pager to the tab strip
         tabsStrip.setViewPager(viewPager);
+
 
     }
 }
