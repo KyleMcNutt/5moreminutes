@@ -1,10 +1,12 @@
 package fivemoreminutes.cs499.cs.csupomona.edu.fivemoreminutes.fragments;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -69,7 +71,7 @@ public class Group extends Fragment {
                         groupItems.add(new GroupItem(value));
                         count++;
                         listAdapter.notifyDataSetChanged();
-                        Object[] params = { getActivity(), groupItems, listAdapter, value };
+                        Object[] params = { getActivity(), groupItems, value };
                         new AddGroupTask().execute(params);
                     }
                 });
@@ -90,8 +92,6 @@ public class Group extends Fragment {
 
         Object[] params = { getActivity(), groupItems, listAdapter };
         new GetGroupsTask().execute(params);
-
         return view;
     }
-
 }

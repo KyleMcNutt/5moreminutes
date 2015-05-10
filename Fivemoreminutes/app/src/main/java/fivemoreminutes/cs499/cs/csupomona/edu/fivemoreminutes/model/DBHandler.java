@@ -5,8 +5,11 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import java.util.ArrayList;
+
+import fivemoreminutes.cs499.cs.csupomona.edu.fivemoreminutes.data.GroupItem;
 
 /**
  * Created by Kyle-PC on 5/3/2015.
@@ -21,7 +24,7 @@ public class DBHandler extends SQLiteOpenHelper {
     public static final String COLUMN_GROUPNAME = "groupName";
 
     public DBHandler(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
-        super(context, name, factory, version);
+        super(context, DATABASE_NAME, factory, DATABASE_VERSION);
     }
 
     @Override
@@ -30,7 +33,11 @@ public class DBHandler extends SQLiteOpenHelper {
                 TABLE_GROUPS + "("
                 + COLUMN_ID + " INTEGER PRIMARY KEY," + COLUMN_GROUPNAME
                 + " TEXT" + ")";
-        db.execSQL(CREATE_GROUPS_TABLE);
+        try {
+            db.execSQL(CREATE_GROUPS_TABLE);
+        } catch (Exception e) {
+            Log.e("SQLException", e.toString());
+        }
     }
 
     @Override
@@ -39,48 +46,48 @@ public class DBHandler extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public void addGroup(GroupModel group) {
+    public void addGroup(GroupItem group) {
         ContentValues values = new ContentValues();
-        values.put(COLUMN_GROUPNAME, group.get_groupName());
+        values.put(COLUMN_GROUPNAME, group.getName());
 
         SQLiteDatabase db = this.getWritableDatabase();
         db.insert(TABLE_GROUPS, null, values);
         db.close();
     }
 
-    public ArrayList<GroupModel> getGroups() {
+    public ArrayList<GroupItem> getGroups() {
         String query = "SELECT * FROM " + TABLE_GROUPS;
 
         SQLiteDatabase db = this.getWritableDatabase();
 
         Cursor cursor = db.rawQuery(query, null);
 
-        ArrayList<GroupModel> allGroups = new ArrayList<GroupModel>();
+        ArrayList<GroupItem> allGroups = new ArrayList<GroupItem>();
 
         if(cursor.moveToFirst()) {
             do {
-                GroupModel group = new GroupModel();
+                GroupItem group = new GroupItem();
                 group.set_id(Integer.parseInt(cursor.getString(0)));
-                group.set_groupName(cursor.getString(1));
+                group.setName(cursor.getString(1));
                 allGroups.add(group);
             } while(cursor.moveToNext());
         }
         return allGroups;
     }
 
-    public GroupModel findGroup(String groupName) {
+    public GroupItem findGroup(String groupName) {
         String query = "Select * FROM " + TABLE_GROUPS + " WHERE " + COLUMN_GROUPNAME + " = \"" + groupName + "\"";
 
         SQLiteDatabase db = this.getWritableDatabase();
 
         Cursor cursor = db.rawQuery(query, null);
 
-        GroupModel group = new GroupModel();
+        GroupItem group = new GroupItem();
 
         if(cursor.moveToFirst()) {
             cursor.moveToFirst();
             group.set_id(Integer.parseInt(cursor.getString(0)));
-            group.set_groupName(cursor.getString(1));
+            group.setName(cursor.getString(1));
             cursor.close();
         } else  {
             group = null;
@@ -97,7 +104,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
         Cursor cursor = db.rawQuery(query, null);
 
-        GroupModel group = new GroupModel();
+        GroupItem group = new GroupItem();
 
         if(cursor.moveToFirst()) {
             group.set_id(Integer.parseInt(cursor.getString(0)));
