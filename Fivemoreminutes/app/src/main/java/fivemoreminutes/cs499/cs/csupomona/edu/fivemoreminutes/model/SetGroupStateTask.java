@@ -11,19 +11,21 @@ import fivemoreminutes.cs499.cs.csupomona.edu.fivemoreminutes.data.GroupItem;
 /**
  * Created by Kyle-PC on 5/3/2015.
  */
-public class GetGroupsTask extends AsyncTask {
+public class SetGroupStateTask extends AsyncTask {
     private DBHandler dbHandler;
-    private ArrayList<GroupItem> groupItems;
-    private GroupItemAdapter listAdapter;
+    private int groupID;
 
     @Override
-    protected ArrayList<GroupItem> doInBackground(Object[] objects) {
+    protected GroupItem doInBackground(Object[] objects) {
         dbHandler = new DBHandler((Activity)objects[0], null, null, 1);
-        groupItems = (ArrayList<GroupItem>) objects[1];
-        listAdapter = (GroupItemAdapter) objects[2];
-        ArrayList<GroupItem> fromDB = dbHandler.getGroups();
-        this.groupItems.addAll(fromDB);
-        listAdapter.notifyDataSetChanged();
-        return groupItems;
+        groupID = (int)objects[1];
+        boolean stateToChangeTo = (boolean)objects[2];
+        if(stateToChangeTo) {
+            dbHandler.setGroupToOn(groupID);
+        } else {
+            dbHandler.setGroupToOff(groupID);
+        }
+        // Don't ever think that this GroupItem does anything, it doesn't
+        return new GroupItem();
     }
 }

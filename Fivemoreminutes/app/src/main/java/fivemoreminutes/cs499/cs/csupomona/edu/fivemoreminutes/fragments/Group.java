@@ -1,13 +1,17 @@
 package fivemoreminutes.cs499.cs.csupomona.edu.fivemoreminutes.fragments;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ListView;
 
@@ -51,9 +55,9 @@ public class Group extends Fragment {
         View view = inflater.inflate(R.layout.group_fragment, container, false);
 
         FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.group_fab);
-        fab.setOnClickListener(new View.OnClickListener(){
+        fab.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v){
+            public void onClick(View v) {
                 AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
 
                 alert.setTitle("New Alarm Group");
@@ -61,16 +65,13 @@ public class Group extends Fragment {
 
                 // Set an EditText view to get user input
                 final EditText input = new EditText(getActivity());
+                input.setSingleLine();
                 alert.setView(input);
 
                 alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         String value = input.getText().toString();
-                        groupItems.add(new GroupItem(value));
-                        count++;
-                        listAdapter.notifyDataSetChanged();
-                        Object[] params = { getActivity(), groupItems, listAdapter, value };
-                        new AddGroupTask().execute(params);
+                        addToGroup(value);
                     }
                 });
 
@@ -90,8 +91,13 @@ public class Group extends Fragment {
 
         Object[] params = { getActivity(), groupItems, listAdapter };
         new GetGroupsTask().execute(params);
-
         return view;
     }
 
+    public void addToGroup(String groupName) {
+        groupItems.add(new GroupItem(groupName, true));
+        listAdapter.notifyDataSetChanged();
+        Object[] params = {getActivity(), groupItems, groupName, true};
+        new AddGroupTask().execute(params);
+    }
 }

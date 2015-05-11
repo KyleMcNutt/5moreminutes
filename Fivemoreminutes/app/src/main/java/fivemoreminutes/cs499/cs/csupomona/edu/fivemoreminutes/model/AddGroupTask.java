@@ -17,11 +17,10 @@ public class AddGroupTask extends AsyncTask {
     private GroupItemAdapter listAdapter;
 
     @Override
-    protected GroupModel doInBackground(Object[] objects) {
+    protected GroupItem doInBackground(Object[] objects) {
         dbHandler = new DBHandler((Activity)objects[0], null, null, 1);
         groupItems = (ArrayList<GroupItem>) objects[1];
-        listAdapter = (GroupItemAdapter) objects[2];
-        GroupModel group = new GroupModel((String)objects[3]);
+        GroupItem group = new GroupItem((String)objects[2], (boolean)objects[3]);
         dbHandler.addGroup(group);
         return group;
     }
