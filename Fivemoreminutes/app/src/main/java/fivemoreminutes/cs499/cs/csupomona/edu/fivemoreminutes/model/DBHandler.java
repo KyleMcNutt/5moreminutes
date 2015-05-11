@@ -16,12 +16,13 @@ import fivemoreminutes.cs499.cs.csupomona.edu.fivemoreminutes.data.GroupItem;
  */
 public class DBHandler extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 3;
     private static final String DATABASE_NAME = "5moreminutes.db";
     private static final String TABLE_GROUPS = "groups";
 
-    public static final String COLUMN_ID = "_id";
+    public static final String COLUMN_GROUPID = "_id";
     public static final String COLUMN_GROUPNAME = "groupName";
+    public static final String COLUMN_CURRENTLYON = "currentlyOn";
 
     public DBHandler(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, DATABASE_NAME, factory, DATABASE_VERSION);
@@ -31,8 +32,10 @@ public class DBHandler extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         String CREATE_GROUPS_TABLE = "CREATE TABLE "+
                 TABLE_GROUPS + "("
-                + COLUMN_ID + " INTEGER PRIMARY KEY," + COLUMN_GROUPNAME
-                + " TEXT" + ")";
+                + COLUMN_GROUPID + " INTEGER PRIMARY KEY, " +
+                COLUMN_GROUPNAME + " TEXT, " +
+                COLUMN_CURRENTLYON + " BOOLEAN"
+                + ")";
         try {
             db.execSQL(CREATE_GROUPS_TABLE);
         } catch (Exception e) {
@@ -49,6 +52,8 @@ public class DBHandler extends SQLiteOpenHelper {
     public void addGroup(GroupItem group) {
         ContentValues values = new ContentValues();
         values.put(COLUMN_GROUPNAME, group.getName());
+        int boolVal = (group.getCurrentlyOn())? 1 : 0;
+        values.put(COLUMN_CURRENTLYON, boolVal);
 
         SQLiteDatabase db = this.getWritableDatabase();
         db.insert(TABLE_GROUPS, null, values);
@@ -69,12 +74,15 @@ public class DBHandler extends SQLiteOpenHelper {
                 GroupItem group = new GroupItem();
                 group.set_id(Integer.parseInt(cursor.getString(0)));
                 group.setName(cursor.getString(1));
+                boolean bool = (cursor.getInt(2) == 1)? true : false;
+                group.setCurrentlyOn(bool);
                 allGroups.add(group);
             } while(cursor.moveToNext());
         }
         return allGroups;
     }
 
+    /* Untested method */
     public GroupItem findGroup(String groupName) {
         String query = "Select * FROM " + TABLE_GROUPS + " WHERE " + COLUMN_GROUPNAME + " = \"" + groupName + "\"";
 
@@ -88,6 +96,8 @@ public class DBHandler extends SQLiteOpenHelper {
             cursor.moveToFirst();
             group.set_id(Integer.parseInt(cursor.getString(0)));
             group.setName(cursor.getString(1));
+            boolean bool = (cursor.getInt(2) == 1)? true : false;
+            group.setCurrentlyOn(bool);
             cursor.close();
         } else  {
             group = null;
@@ -96,6 +106,33 @@ public class DBHandler extends SQLiteOpenHelper {
         return group;
     }
 
+    public int setGroupToOff(int groupID) {
+        int rowsUpdated = 0;
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_CURRENTLYON, 0);
+        SQLiteDatabase db = this.getWritableDatabase();
+        try {
+            rowsUpdated = db.update(TABLE_GROUPS, values, COLUMN_GROUPID + " = " + groupID, null);
+        } catch (Exception e) {
+            Log.e("SQLException", e.toString());
+        }
+        return rowsUpdated;
+    }
+
+    public int setGroupToOn(int groupID) {
+        int rowsUpdated = 0;
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_CURRENTLYON, 1);
+        SQLiteDatabase db = this.getWritableDatabase();
+        try {
+            rowsUpdated = db.update(TABLE_GROUPS, values, COLUMN_GROUPID + " = " + groupID, null);
+        } catch (Exception e) {
+            Log.e("SQLException", e.toString());
+        }
+        return rowsUpdated;
+    }
+
+    /* Untested method */
     public boolean deleteGroup(String groupName) {
         boolean result = false;
         String query = "Select * FROM " + TABLE_GROUPS + " WHERE " + COLUMN_GROUPNAME + " = \"" + groupName + "\"";
@@ -108,7 +145,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
         if(cursor.moveToFirst()) {
             group.set_id(Integer.parseInt(cursor.getString(0)));
-            db.delete(TABLE_GROUPS, COLUMN_ID + " = ?",
+            db.delete(TABLE_GROUPS, COLUMN_GROUPID + " = ?",
                     new String[]{String.valueOf(group.get_id())});
             cursor.close();
             result = true;

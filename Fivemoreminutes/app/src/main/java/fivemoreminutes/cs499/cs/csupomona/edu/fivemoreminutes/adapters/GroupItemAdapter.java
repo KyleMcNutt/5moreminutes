@@ -9,12 +9,14 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import java.util.ArrayList;
 
 import fivemoreminutes.cs499.cs.csupomona.edu.fivemoreminutes.activities.DrillDownAlarmActivity;
 import fivemoreminutes.cs499.cs.csupomona.edu.fivemoreminutes.data.GroupItem;
 import fivemoreminutes.cs499.cs.csupomona.edu.fivemoreminutes.R;
+import fivemoreminutes.cs499.cs.csupomona.edu.fivemoreminutes.model.SetGroupStateTask;
 
 /**
  * Created by Calvin on 4/19/2015.
@@ -38,16 +40,24 @@ public class GroupItemAdapter extends ArrayAdapter<GroupItem>{
 
         final TextView nameText = (TextView) view.findViewById(R.id.name);
         nameText.setText(groupItems.get(position).getName());
-        nameText.setOnClickListener(new View.OnClickListener(){
+        nameText.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view){
+            public void onClick(View view) {
                 Intent intent = new Intent(context, DrillDownAlarmActivity.class);
                 context.startActivity(intent);
-                Log.i("Test", "Group has been clicked");
             }
         });
-        Switch groupSwitch = (Switch) view.findViewById(R.id.group_switch);
-        groupSwitch.setChecked(true);
+        final Switch groupSwitch = (Switch) view.findViewById(R.id.group_switch);
+        groupSwitch.setChecked(groupItems.get(position).getCurrentlyOn());
+        groupSwitch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                boolean state = ((Switch) view).isChecked();
+                int groupID = groupItems.get(position).get_id();
+                Object[] params = {context, groupID, state};
+                new SetGroupStateTask().execute(params);
+            }
+        });
 
         return view;
     }

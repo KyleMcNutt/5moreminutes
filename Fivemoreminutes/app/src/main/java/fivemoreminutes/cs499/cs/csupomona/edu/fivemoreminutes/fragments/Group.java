@@ -95,9 +95,9 @@ public class Group extends Fragment {
     }
 
     public void addToGroup(String groupName) {
-        groupItems.add(new GroupItem(groupName));
+        groupItems.add(new GroupItem(groupName, true));
         listAdapter.notifyDataSetChanged();
-        Object[] params = {getActivity(), groupItems, groupName};
+        Object[] params = {getActivity(), groupItems, groupName, true};
         new AddGroupTask().execute(params);
     }
 }

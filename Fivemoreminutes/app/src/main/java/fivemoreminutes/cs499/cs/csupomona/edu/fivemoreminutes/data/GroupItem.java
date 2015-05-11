@@ -7,14 +7,16 @@ public class GroupItem {
 
     private int _id;
     private String name;
+    private boolean currentlyOn;
 
     public GroupItem() {
         this._id = 0;
         this.name = "";
     }
-    public GroupItem(String _groupName) {
+    public GroupItem(String _groupName, boolean _currentlyOn) {
         this._id = 0;
         this.name = _groupName;
+        this.currentlyOn = _currentlyOn;
     }
 
     public String getName() {
@@ -31,5 +33,13 @@ public class GroupItem {
 
     public void set_id(int _id) {
         this._id = _id;
+    }
+
+    public boolean getCurrentlyOn() {
+        return currentlyOn;
+    }
+
+    public void setCurrentlyOn(boolean currentlyOn) {
+        this.currentlyOn = currentlyOn;
     }
 }
