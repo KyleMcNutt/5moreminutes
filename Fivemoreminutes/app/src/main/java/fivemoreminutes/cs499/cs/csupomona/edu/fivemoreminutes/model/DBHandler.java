@@ -9,6 +9,7 @@ import android.util.Log;
 
 import java.util.ArrayList;
 
+import fivemoreminutes.cs499.cs.csupomona.edu.fivemoreminutes.data.AlarmItem;
 import fivemoreminutes.cs499.cs.csupomona.edu.fivemoreminutes.data.GroupItem;
 
 /**
@@ -16,13 +17,19 @@ import fivemoreminutes.cs499.cs.csupomona.edu.fivemoreminutes.data.GroupItem;
  */
 public class DBHandler extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 3;
+    private static final int DATABASE_VERSION = 6;
     private static final String DATABASE_NAME = "5moreminutes.db";
     private static final String TABLE_GROUPS = "groups";
+    private static final String TABLE_GROUPS_ALARMS = "group_alarms";
 
     public static final String COLUMN_GROUPID = "_id";
     public static final String COLUMN_GROUPNAME = "groupName";
     public static final String COLUMN_CURRENTLYON = "currentlyOn";
+
+    public static final String COLUMN_GROUP_ALARMID = "_id";
+    public static final String COLUMN_GROUP_ALARMKEY = "groupKey";
+    public static final String COLUMN_HOURS = "hours";
+    public static final String COLUMN_MINUTES = "minutes";
 
     public DBHandler(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, DATABASE_NAME, factory, DATABASE_VERSION);
@@ -36,8 +43,17 @@ public class DBHandler extends SQLiteOpenHelper {
                 COLUMN_GROUPNAME + " TEXT, " +
                 COLUMN_CURRENTLYON + " BOOLEAN"
                 + ")";
+        String CREATE_ALARM_GROUPS_TABLE = "CREATE TABLE "+
+                TABLE_GROUPS_ALARMS + "("
+                + COLUMN_GROUP_ALARMID + " INTEGER PRIMARY KEY, " +
+                COLUMN_GROUP_ALARMKEY + " INTEGER, " +
+                COLUMN_HOURS + " INTEGER, " +
+                COLUMN_MINUTES + " INTEGER, " +
+                "FOREIGN KEY("+COLUMN_GROUP_ALARMKEY+") REFERENCES "+TABLE_GROUPS+"("+COLUMN_GROUPID+")" +
+                ")";
         try {
             db.execSQL(CREATE_GROUPS_TABLE);
+            db.execSQL(CREATE_ALARM_GROUPS_TABLE);
         } catch (Exception e) {
             Log.e("SQLException", e.toString());
         }
@@ -46,7 +62,39 @@ public class DBHandler extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int i, int i1) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_GROUPS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_GROUPS_ALARMS);
         onCreate(db);
+    }
+
+    public void addGroupAlarm(AlarmItem alarm) {
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_GROUP_ALARMKEY, alarm.getGroupKey());
+        values.put(COLUMN_HOURS, alarm.getHour());
+        values.put(COLUMN_MINUTES, alarm.getMinute());
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.insert(TABLE_GROUPS_ALARMS, null, values);
+        db.close();
+    }
+
+    public ArrayList<AlarmItem> getGroupAlarms(int groupKey) {
+        String query = "SELECT * FROM " + TABLE_GROUPS_ALARMS + " WHERE " + COLUMN_GROUP_ALARMKEY + " = \"" + groupKey+"\"";
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+        ArrayList<AlarmItem> groupAlarms = new ArrayList<AlarmItem>();
+
+        if(cursor.moveToFirst()) {
+            do {
+                AlarmItem alarm = new AlarmItem();
+                alarm.set_id(Integer.parseInt(cursor.getString(0)));
+                alarm.setGroupKey(Integer.parseInt(cursor.getString(1)));
+                alarm.setHour(Integer.parseInt(cursor.getString(2)));
+                alarm.setMinute(Integer.parseInt(cursor.getString(3)));
+                groupAlarms.add(alarm);
+            } while(cursor.moveToNext());
+        }
+
+        return groupAlarms;
     }
 
     public void addGroup(GroupItem group) {

@@ -31,9 +31,7 @@ public class PagerAdapter extends FragmentPagerAdapter {
             case 0:
                 return new Group();
             case 1:
-                Alarm alarm = new Alarm();
-                //Log.e("hello", "" + alarm.getTag());
-                return alarm;
+                return new Alarm();
         }
         return null;
     }
