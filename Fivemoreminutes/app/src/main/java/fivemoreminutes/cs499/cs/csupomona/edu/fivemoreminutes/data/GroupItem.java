@@ -13,8 +13,8 @@ public class GroupItem {
         this._id = 0;
         this.name = "";
     }
-    public GroupItem(String _groupName, boolean _currentlyOn) {
-        this._id = 0;
+    public GroupItem(String _groupName, boolean _currentlyOn, int _id) {
+        this._id = _id;
         this.name = _groupName;
         this.currentlyOn = _currentlyOn;
     }

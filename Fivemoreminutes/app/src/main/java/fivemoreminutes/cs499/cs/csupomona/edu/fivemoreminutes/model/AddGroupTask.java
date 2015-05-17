@@ -20,7 +20,7 @@ public class AddGroupTask extends AsyncTask {
     protected GroupItem doInBackground(Object[] objects) {
         dbHandler = new DBHandler((Activity)objects[0], null, null, 1);
         groupItems = (ArrayList<GroupItem>) objects[1];
-        GroupItem group = new GroupItem((String)objects[2], (boolean)objects[3]);
+        GroupItem group = new GroupItem((String)objects[2], (boolean)objects[3], (int)objects[4]);
         dbHandler.addGroup(group);
         return group;
     }

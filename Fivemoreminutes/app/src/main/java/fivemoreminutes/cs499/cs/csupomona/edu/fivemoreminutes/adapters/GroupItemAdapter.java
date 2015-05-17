@@ -44,6 +44,7 @@ public class GroupItemAdapter extends ArrayAdapter<GroupItem>{
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, DrillDownAlarmActivity.class);
+                intent.putExtra("GROUP_ID", groupItems.get(position).get_id());
                 context.startActivity(intent);
             }
         });

@@ -1,10 +1,12 @@
 package fivemoreminutes.cs499.cs.csupomona.edu.fivemoreminutes.activities;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 
 import com.astuetz.PagerSlidingTabStrip;
 
@@ -26,10 +28,13 @@ public class DrillDownAlarmActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Intent intent = getIntent();
+        int defaultValue = 0;
+        Log.e("PASSED_GROUP_ID", ""+intent.getIntExtra("GROUP_ID", defaultValue));
 
         // Get the ViewPager and set it's PagerAdapter so that it can display items
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
-        viewPager.setAdapter(new DrillDownAlarmAdapter(getSupportFragmentManager()));
+        viewPager.setAdapter(new DrillDownAlarmAdapter(getSupportFragmentManager(), intent.getIntExtra("GROUP_ID", defaultValue)));
 
         // Give the PagerSlidingTabStrip the ViewPager
         PagerSlidingTabStrip tabsStrip = (PagerSlidingTabStrip) findViewById(R.id.tabs);
