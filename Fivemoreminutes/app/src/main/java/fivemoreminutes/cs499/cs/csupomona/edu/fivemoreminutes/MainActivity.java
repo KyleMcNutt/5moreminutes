@@ -7,10 +7,13 @@ import android.os.Bundle;
 
 import com.astuetz.PagerSlidingTabStrip;
 
+import fivemoreminutes.cs499.cs.csupomona.edu.fivemoreminutes.Receiver.AlarmReceiver;
 import fivemoreminutes.cs499.cs.csupomona.edu.fivemoreminutes.adapters.PagerAdapter;
 
 
 public class MainActivity extends ActionBarActivity {
+
+    AlarmReceiver alarm = new AlarmReceiver();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
