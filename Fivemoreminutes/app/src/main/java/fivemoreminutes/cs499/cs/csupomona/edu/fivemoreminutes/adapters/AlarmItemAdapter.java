@@ -33,7 +33,7 @@ public class AlarmItemAdapter extends ArrayAdapter<AlarmItem>{
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.alarm_item, parent, false);
         TextView nameText = (TextView) view.findViewById(R.id.name);
-        nameText.setText(alarmItems.get(position).getHour() + ":" + alarmItems.get(position).getMinute());
+        nameText.setText(alarmItems.get(position).toString(alarmItems.get(position).getHour(), alarmItems.get(position).getMinute(), view.getContext()));
         Switch groupSwitch = (Switch) view.findViewById(R.id.alarm_switch);
         groupSwitch.setChecked(true);
 
