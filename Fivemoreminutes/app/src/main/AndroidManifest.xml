@@ -18,6 +18,10 @@
             </intent-filter>
         </activity>
         <activity android:name = ".activities.DrillDownAlarmActivity"/>
+        <receiver android:name=".Receiver.AlarmReceiver"
+            android:enabled="true">
+        </receiver>
     </application>
+
 
 </manifest>

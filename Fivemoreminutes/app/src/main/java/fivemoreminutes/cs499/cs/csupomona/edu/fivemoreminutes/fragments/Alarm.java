@@ -1,5 +1,9 @@
 package fivemoreminutes.cs499.cs.csupomona.edu.fivemoreminutes.fragments;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -7,12 +11,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.getbase.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
 import fivemoreminutes.cs499.cs.csupomona.edu.fivemoreminutes.R;
+import fivemoreminutes.cs499.cs.csupomona.edu.fivemoreminutes.Receiver.AlarmReceiver;
 import fivemoreminutes.cs499.cs.csupomona.edu.fivemoreminutes.adapters.AlarmItemAdapter;
 import fivemoreminutes.cs499.cs.csupomona.edu.fivemoreminutes.data.AlarmItem;
 import fivemoreminutes.cs499.cs.csupomona.edu.fivemoreminutes.model.AddGroupAlarm;
@@ -29,7 +35,7 @@ public class Alarm extends Fragment {
     private AlarmItemAdapter listAdapter;
     private TimePickDialog tpd;
     private int groupID;
-
+    private PendingIntent pendingIntent;
 
     public static Alarm newInstance(int page) {
         Bundle args = new Bundle();
@@ -41,7 +47,11 @@ public class Alarm extends Fragment {
     public void addToList(int hourOfDay, int minute) {
         AlarmItem toAdd = new AlarmItem(hourOfDay, minute, this.groupID);
         alarmItems.add(toAdd);
-        listAdapter.notifyDataSetChanged();
+        listAdapter.notifyDataSetChanged(); 
+        AlarmManager manager = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
+        int interval = 8000;
+        manager.setInexactRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), interval, pendingIntent);
+        Toast.makeText(getActivity(), "Alarm Set", Toast.LENGTH_SHORT).show();
         //fire async method for adding AlarmItem to group_alarm table
         if(this.getTag().equals("android:switcher:2131361862:0")) {
             Object[] params = { getActivity(), toAdd.getHour(), toAdd.getMinute(), toAdd.getGroupKey() };
@@ -66,6 +76,8 @@ public class Alarm extends Fragment {
             this.groupID = groupID;
         }
 
+        Intent alarmIntent = new Intent(getActivity(), AlarmReceiver.class);
+        pendingIntent = PendingIntent.getBroadcast(getActivity(),0,alarmIntent,0);
 
         FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.alarm_fab);
         fab.setOnClickListener(new View.OnClickListener() {
