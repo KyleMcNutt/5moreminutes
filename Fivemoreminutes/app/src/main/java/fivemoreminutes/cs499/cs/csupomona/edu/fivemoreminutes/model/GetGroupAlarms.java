@@ -26,7 +26,12 @@ public class GetGroupAlarms extends AsyncTask {
         listAdapter = (AlarmItemAdapter) objects[2];
         ArrayList<AlarmItem> fromDB = dbHandler.getGroupAlarms((int)objects[3]);
         this.alarmItems.addAll(fromDB);
-        listAdapter.notifyDataSetChanged();
+        ((Activity)objects[0]).runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                listAdapter.notifyDataSetChanged();
+            }
+        });
         return alarmItems;
     }
 }

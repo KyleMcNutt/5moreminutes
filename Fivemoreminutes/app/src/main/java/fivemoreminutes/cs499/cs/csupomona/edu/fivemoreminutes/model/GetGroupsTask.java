@@ -23,7 +23,12 @@ public class GetGroupsTask extends AsyncTask {
         listAdapter = (GroupItemAdapter) objects[2];
         ArrayList<GroupItem> fromDB = dbHandler.getGroups();
         this.groupItems.addAll(fromDB);
-        listAdapter.notifyDataSetChanged();
+        ((Activity)objects[0]).runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                listAdapter.notifyDataSetChanged();
+            }
+        });
         return groupItems;
     }
 }

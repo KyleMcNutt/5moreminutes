@@ -16,12 +16,14 @@ import android.widget.Toast;
 
 import java.util.Calendar;
 
+import fivemoreminutes.cs499.cs.csupomona.edu.fivemoreminutes.activities.AlarmNotification;
+
 public class AlarmReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        Log.e("TEST", "BROAD CAST WORKED!");
-        // For our recurring task, we'll just display a message
-        Toast.makeText(context, "I'm running", Toast.LENGTH_SHORT).show();
+        Intent alarmPage = new Intent(context, AlarmNotification.class);
+        alarmPage.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(alarmPage);
     }
 }

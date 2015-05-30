@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.provider.AlarmClock;
 import android.support.v4.app.DialogFragment;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -18,7 +19,6 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-import fivemoreminutes.cs499.cs.csupomona.edu.fivemoreminutes.Receiver.AlarmReceiver;
 
 
 /**
@@ -45,11 +45,11 @@ public class TimePickDialog extends DialogFragment implements TimePickerDialog.O
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
         // Do something with the time chosen by the user
         if (view.isShown()) {
-           if(getActivity().getSupportFragmentManager().findFragmentByTag("android:switcher:2131361862:1") == null){
-               Alarm alarmFrag = (Alarm) getActivity().getSupportFragmentManager().findFragmentByTag("android:switcher:2131361862:0");
+           if(getActivity().getSupportFragmentManager().findFragmentByTag("android:switcher:2131427398:1") == null){
+               Alarm alarmFrag = (Alarm) getActivity().getSupportFragmentManager().findFragmentByTag("android:switcher:2131427398:0");
                alarmFrag.addToList(hourOfDay, minute);
            }else {
-               Alarm alarmFrag = (Alarm) getActivity().getSupportFragmentManager().findFragmentByTag("android:switcher:2131361862:1");
+               Alarm alarmFrag = (Alarm) getActivity().getSupportFragmentManager().findFragmentByTag("android:switcher:2131427398:1");
                alarmFrag.addToList(hourOfDay, minute);
            }
         }

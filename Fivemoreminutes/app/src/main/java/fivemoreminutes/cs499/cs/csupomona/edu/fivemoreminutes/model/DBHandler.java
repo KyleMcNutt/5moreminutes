@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import fivemoreminutes.cs499.cs.csupomona.edu.fivemoreminutes.data.AlarmItem;
 import fivemoreminutes.cs499.cs.csupomona.edu.fivemoreminutes.data.GroupItem;
@@ -77,8 +78,46 @@ public class DBHandler extends SQLiteOpenHelper {
         db.close();
     }
 
+    public AlarmItem getNextAlarm() {
+        String query = "SELECT * FROM " + TABLE_GROUPS_ALARMS + " ORDER BY " + COLUMN_HOURS + ", " + COLUMN_MINUTES + " ASC";
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+        AlarmItem alarm = null;
+        int counter = 0;
+        Calendar currentTime = Calendar.getInstance();
+        if(cursor.moveToFirst()) {
+            do {
+                AlarmItem temp = new AlarmItem();
+                temp.set_id(Integer.parseInt(cursor.getString(0)));
+                temp.setGroupKey(Integer.parseInt(cursor.getString(1)));
+                temp.setHour(Integer.parseInt(cursor.getString(2)));
+                temp.setMinute(Integer.parseInt(cursor.getString(3)));
+                if(counter == 0) {
+                    alarm = temp;
+                    counter++;
+                } else {
+                    if(currentTime.get(currentTime.HOUR_OF_DAY) > temp.getHour()) {
+                        continue;
+                    } else if(currentTime.get(currentTime.HOUR_OF_DAY) == temp.getHour() && currentTime.get(currentTime.MINUTE) > temp.getMinute()) {
+                        continue;
+                    }
+                    int hoursDiffBetweenNowAndTemp = Math.abs(currentTime.get(currentTime.HOUR_OF_DAY) - temp.getHour());
+                    int minutesDiffBetweenNowAndTemp = Math.abs(currentTime.get(currentTime.MINUTE) - temp.getMinute());
+                    int hoursDiffBetweenNowAndCurrent = Math.abs(currentTime.get(currentTime.HOUR_OF_DAY) - alarm.getHour());
+                    int minutesDiffBetweenNowAndCurrent = Math.abs(currentTime.get(currentTime.MINUTE) - alarm.getMinute());
+                    if(hoursDiffBetweenNowAndTemp < hoursDiffBetweenNowAndCurrent) {
+                        alarm = temp;
+                    } else if((hoursDiffBetweenNowAndTemp == hoursDiffBetweenNowAndCurrent) && (minutesDiffBetweenNowAndTemp < minutesDiffBetweenNowAndCurrent)) {
+                        alarm = temp;
+                    }
+                }
+            } while(cursor.moveToNext());
+        }
+        return alarm;
+    }
+
     public ArrayList<AlarmItem> getGroupAlarms(int groupKey) {
-        String query = "SELECT * FROM " + TABLE_GROUPS_ALARMS + " WHERE " + COLUMN_GROUP_ALARMKEY + " = \"" + groupKey+"\"";
+        String query = "SELECT * FROM " + TABLE_GROUPS_ALARMS + " WHERE " + COLUMN_GROUP_ALARMKEY + " = \"" + groupKey+"\" ORDER BY " + COLUMN_HOURS + ", " +COLUMN_MINUTES + " ASC";
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(query, null);
         ArrayList<AlarmItem> groupAlarms = new ArrayList<AlarmItem>();

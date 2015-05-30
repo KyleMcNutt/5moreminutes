@@ -24,6 +24,7 @@ import fivemoreminutes.cs499.cs.csupomona.edu.fivemoreminutes.data.AlarmItem;
 import fivemoreminutes.cs499.cs.csupomona.edu.fivemoreminutes.model.AddGroupAlarm;
 import fivemoreminutes.cs499.cs.csupomona.edu.fivemoreminutes.model.GetGroupAlarms;
 import fivemoreminutes.cs499.cs.csupomona.edu.fivemoreminutes.model.GetGroupsTask;
+import fivemoreminutes.cs499.cs.csupomona.edu.fivemoreminutes.model.GetNextAlarmTask;
 
 /**
  * Created by Calvin on 4/11/2015.
@@ -47,13 +48,10 @@ public class Alarm extends Fragment {
     public void addToList(int hourOfDay, int minute) {
         AlarmItem toAdd = new AlarmItem(hourOfDay, minute, this.groupID);
         alarmItems.add(toAdd);
-        listAdapter.notifyDataSetChanged(); 
-        AlarmManager manager = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
-        int interval = 8000;
-        manager.setInexactRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), interval, pendingIntent);
+        listAdapter.notifyDataSetChanged();
         Toast.makeText(getActivity(), "Alarm Set", Toast.LENGTH_SHORT).show();
         //fire async method for adding AlarmItem to group_alarm table
-        if(this.getTag().equals("android:switcher:2131361862:0")) {
+        if(this.getTag().equals("android:switcher:2131427398:0")) {
             Object[] params = { getActivity(), toAdd.getHour(), toAdd.getMinute(), toAdd.getGroupKey() };
             new AddGroupAlarm().execute(params);
         }
@@ -71,13 +69,10 @@ public class Alarm extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.alarm_fragment, container, false);
-        if(this.getTag().equals("android:switcher:2131361862:0")) {
+        if(this.getTag().equals("android:switcher:2131427398:0")) {
             int groupID = getArguments().getInt("GROUP_ID");
             this.groupID = groupID;
         }
-
-        Intent alarmIntent = new Intent(getActivity(), AlarmReceiver.class);
-        pendingIntent = PendingIntent.getBroadcast(getActivity(),0,alarmIntent,0);
 
         FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.alarm_fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -93,7 +88,7 @@ public class Alarm extends Fragment {
         listAdapter = new AlarmItemAdapter(this.getActivity(), alarmItems);
         listView.setAdapter(listAdapter);
 
-        if(this.getTag().equals("android:switcher:2131361862:0")) {
+        if(this.getTag().equals("android:switcher:2131427398:0")) {
             Object[] params = { getActivity(), alarmItems, listAdapter, this.groupID };
             new GetGroupAlarms().execute(params);
         }
