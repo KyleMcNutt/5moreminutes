@@ -18,7 +18,9 @@
             android:text="@string/group"
             android:textColor="#000"
             android:id="@+id/name"
-            android:textSize="20sp" />
+            android:textSize="28dp"
+            android:maxWidth="200dp"
+            android:maxLines="1"/>
     </LinearLayout>
 
     <Switch
