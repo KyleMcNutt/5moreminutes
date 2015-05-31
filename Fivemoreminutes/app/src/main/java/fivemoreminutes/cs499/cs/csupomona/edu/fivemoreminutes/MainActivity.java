@@ -27,9 +27,6 @@ public class MainActivity extends ActionBarActivity {
         tabsStrip.setTextColor(Color.parseColor("#FFFFFF"));
         // Attach the view pager to the tab strip
         tabsStrip.setViewPager(viewPager);
-
-        Object[] parameters = { this };
-        new GetNextAlarmTask().execute(parameters);
     }
 }
 

@@ -49,6 +49,9 @@ public class Alarm extends Fragment {
         AlarmItem toAdd = new AlarmItem(hourOfDay, minute, this.groupID);
         alarmItems.add(toAdd);
         listAdapter.notifyDataSetChanged();
+        //fire async method to register this alarm with AlarmManager
+        Object[] parameters = { this };
+        new GetNextAlarmTask().execute(parameters);
         Toast.makeText(getActivity(), "Alarm Set", Toast.LENGTH_SHORT).show();
         //fire async method for adding AlarmItem to group_alarm table
         if(this.getTag().equals("android:switcher:2131427398:0")) {

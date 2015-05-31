@@ -85,6 +85,7 @@ public class DBHandler extends SQLiteOpenHelper {
         AlarmItem alarm = null;
         int counter = 0;
         Calendar currentTime = Calendar.getInstance();
+        //currentTime.add(Calendar.MINUTE, 1);
         if(cursor.moveToFirst()) {
             do {
                 AlarmItem temp = new AlarmItem();
@@ -92,6 +93,9 @@ public class DBHandler extends SQLiteOpenHelper {
                 temp.setGroupKey(Integer.parseInt(cursor.getString(1)));
                 temp.setHour(Integer.parseInt(cursor.getString(2)));
                 temp.setMinute(Integer.parseInt(cursor.getString(3)));
+                if(getGroupById(temp.getGroupKey()).getCurrentlyOn() == false) {
+                    continue;
+                }
                 if(counter == 0) {
                     alarm = temp;
                     counter++;
@@ -145,6 +149,24 @@ public class DBHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         db.insert(TABLE_GROUPS, null, values);
         db.close();
+    }
+
+    public GroupItem getGroupById(int groupKey) {
+        String query = "SELECT * FROM " + TABLE_GROUPS + " WHERE " + COLUMN_GROUPID + " = \"" + groupKey + "\"";
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        Cursor cursor = db.rawQuery(query, null);
+
+        GroupItem group = new GroupItem();
+
+        if (cursor.moveToFirst()) {
+            group.set_id(Integer.parseInt(cursor.getString(0)));
+            group.setName(cursor.getString(1));
+            boolean bool = (cursor.getInt(2) == 1)? true : false;
+            group.setCurrentlyOn(bool);
+        }
+        return group;
     }
 
     public ArrayList<GroupItem> getGroups() {
